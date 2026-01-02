@@ -178,6 +178,9 @@ const ItemsView: FC<ItemsViewProps> = ({
             cardOptions.overlayPlayButton = true;
         } else if (viewType === LibraryTab.Series || viewType === LibraryTab.Networks) {
             cardOptions.overlayMoreButton = true;
+        } else if (viewType === LibraryTab.Games) {
+            cardOptions.showGamePlatform = true;
+            cardOptions.overlayMoreButton = true;
         }
 
         return cardOptions;

@@ -72,6 +72,7 @@ export interface CardOptions {
     showSeriesTimerTime?: boolean;
     showSeriesTimerChannel?: boolean;
     showSongCount?: boolean;
+    showGamePlatform?: boolean;
     width?: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     widths?: any;
