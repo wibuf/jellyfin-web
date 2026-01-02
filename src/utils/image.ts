@@ -113,6 +113,8 @@ export function getLibraryIcon(library: CollectionType | string | null | undefin
             return 'queue';
         case 'channels':
             return 'videocam';
+        case 'games':
+            return 'sports_esports';
         case undefined:
             return 'quiz';
         default:

@@ -13,6 +13,7 @@ import Queue from '@mui/icons-material/Queue';
 import Quiz from '@mui/icons-material/Quiz';
 import VideoLibrary from '@mui/icons-material/VideoLibrary';
 import Folder from '@mui/icons-material/Folder';
+import SportsEsports from '@mui/icons-material/SportsEsports';
 import React, { FC } from 'react';
 
 import { MetaView } from '../constants/metaView';
@@ -50,6 +51,8 @@ const LibraryIcon: FC<LibraryIconProps> = ({
             return <VideoLibrary />;
         case CollectionType.Playlists:
             return <Queue />;
+        case 'games':
+            return <SportsEsports />;
         case undefined:
             return <Quiz />;
         default:

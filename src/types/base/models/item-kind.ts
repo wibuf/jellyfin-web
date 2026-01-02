@@ -4,7 +4,8 @@ export const ItemKind = {
     ...BaseItemKind,
     Timer: 'Timer',
     SeriesTimer: 'SeriesTimer',
-    AudioPodcast: 'AudioPodcast'
+    AudioPodcast: 'AudioPodcast',
+    Game: 'Game'
 } as const;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare

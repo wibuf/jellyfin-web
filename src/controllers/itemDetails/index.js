@@ -37,6 +37,7 @@ import Dashboard from 'utils/dashboard';
 import Events from 'utils/events';
 import { getItemBackdropImageUrl } from 'utils/jellyfin-apiclient/backdropImage';
 import { toApi } from 'utils/jellyfin-apiclient/compat';
+import toast from 'components/toast/toast';
 
 import 'elements/emby-itemscontainer/emby-itemscontainer';
 import 'elements/emby-checkbox/emby-checkbox';
@@ -323,6 +324,18 @@ function renderSubtitleSelections(page, mediaSources) {
 
 function reloadPlayButtons(page, item) {
     let canPlay = false;
+
+    // Show launch button for Game items instead of play buttons
+    if (item.Type === 'Game') {
+        hideAll(page, 'btnPlay');
+        hideAll(page, 'btnReplay');
+        hideAll(page, 'btnInstantMix');
+        hideAll(page, 'btnShuffle');
+        hideAll(page, 'btnLaunchGame', true);
+        return false;
+    } else {
+        hideAll(page, 'btnLaunchGame');
+    }
 
     if (item.Type == 'Program') {
         const now = new Date();
@@ -2041,6 +2054,20 @@ export default function (view, params) {
         }]);
     }
 
+    function onLaunchGameClick() {
+        const apiClient = getApiClient();
+        apiClient.ajax({
+            url: apiClient.getUrl('Games/' + currentItem.Id + '/Launch'),
+            type: 'POST'
+        }).then(function (launchInfo) {
+            console.log('Game launch info:', launchInfo);
+            toast(globalize.translate('LaunchingGame', currentItem.Name));
+        }).catch(function (error) {
+            console.error('Failed to launch game:', error);
+            toast(globalize.translate('ErrorLaunchingGame'));
+        });
+    }
+
     function onMoreCommandsClick() {
         const button = this;
         let selectedItem = view.querySelector('.selectSource').value || currentItem.Id;
@@ -2101,6 +2128,7 @@ export default function (view, params) {
 
         bindAll(view, '.btnPlay', 'click', onPlayClick);
         bindAll(view, '.btnReplay', 'click', onPlayClick);
+        bindAll(view, '.btnLaunchGame', 'click', onLaunchGameClick);
         bindAll(view, '.btnInstantMix', 'click', onInstantMixClick);
         bindAll(view, '.btnShuffle', 'click', onShuffleClick);
         bindAll(view, '.btnPlayTrailer', 'click', onPlayTrailerClick);

@@ -25,6 +25,9 @@ const getCollectionTypeOptions = () => {
     }, {
         name: globalize.translate('MixedMoviesShows'),
         value: 'mixed'
+    }, {
+        name: globalize.translate('Games'),
+        value: 'games'
     }];
 };
 

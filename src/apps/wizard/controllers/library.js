@@ -259,6 +259,9 @@ function getCollectionTypeOptions() {
         name: globalize.translate('MixedMoviesShows'),
         value: 'mixed',
         message: globalize.translate('MessageUnsetContentHelp')
+    }, {
+        name: globalize.translate('Games'),
+        value: 'games'
     }];
 }
 
