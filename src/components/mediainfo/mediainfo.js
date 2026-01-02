@@ -287,6 +287,14 @@ export function getMediaInfoHtml(item, options = {}) {
         miscInfo.push(item.Container);
     }
 
+    // Show GamePlatform for Game items
+    if (item.Type === 'Game' && item.GamePlatform) {
+        miscInfo.push({
+            text: item.GamePlatform,
+            cssClass: 'mediaInfoText mediaInfoGamePlatform'
+        });
+    }
+
     html += miscInfo.map(m => {
         return getMediaInfoItem(m);
     }).join('');

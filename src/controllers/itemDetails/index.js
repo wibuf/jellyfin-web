@@ -2061,7 +2061,13 @@ export default function (view, params) {
             type: 'POST'
         }).then(function (launchInfo) {
             console.log('Game launch info:', launchInfo);
-            toast(globalize.translate('LaunchingGame', currentItem.Name));
+            if (launchInfo && launchInfo.emulatorName) {
+                toast(globalize.translate('LaunchingGameWithEmulator', currentItem.Name, launchInfo.emulatorName));
+            } else if (launchInfo && launchInfo.status === 'no_emulator') {
+                toast(globalize.translate('NoEmulatorConfigured'));
+            } else {
+                toast(globalize.translate('LaunchingGame', currentItem.Name));
+            }
         }).catch(function (error) {
             console.error('Failed to launch game:', error);
             toast(globalize.translate('ErrorLaunchingGame'));

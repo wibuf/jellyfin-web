@@ -373,6 +373,21 @@ function shouldShowPersonRoleOrType(
     return !!(showPersonRoleOrType && (item as BaseItemPerson).Role);
 }
 
+function shouldShowGamePlatform(
+    showGamePlatform: boolean | undefined,
+    itemType: ItemKind
+) {
+    return showGamePlatform && itemType === ItemKind.Game;
+}
+
+function getGamePlatform(item: ItemDto) {
+    // GamePlatform is a string field on Game items from the server
+    if ((item as any).GamePlatform) {
+        return (item as any).GamePlatform;
+    }
+    return '';
+}
+
 function shouldShowParentTitle(
     showParentTitle: boolean | undefined,
     parentTitleUnderneath: boolean
@@ -411,6 +426,10 @@ function addOtherText(
 
     if (cardOptions.showSongCount) {
         addTextLine({ title: getSongCount(item.SongCount) });
+    }
+
+    if (shouldShowGamePlatform(cardOptions.showGamePlatform, item.Type)) {
+        addTextLine({ title: getGamePlatform(item) });
     }
 
     if (cardOptions.showPremiereDate) {

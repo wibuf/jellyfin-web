@@ -672,7 +672,13 @@ function executeCommand(item, id, options) {
                     type: 'POST'
                 }).then(function (launchInfo) {
                     console.log('Game launch info:', launchInfo);
-                    toast(globalize.translate('LaunchingGame', item.Name));
+                    if (launchInfo && launchInfo.emulatorName) {
+                        toast(globalize.translate('LaunchingGameWithEmulator', item.Name, launchInfo.emulatorName));
+                    } else if (launchInfo && launchInfo.status === 'no_emulator') {
+                        toast(globalize.translate('NoEmulatorConfigured'));
+                    } else {
+                        toast(globalize.translate('LaunchingGame', item.Name));
+                    }
                     getResolveFunction(resolve, id)();
                 }).catch(function (error) {
                     console.error('Failed to launch game:', error);
