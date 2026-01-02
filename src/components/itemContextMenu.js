@@ -50,6 +50,15 @@ export async function getCommands(options) {
 
     const commands = [];
 
+    // Launch option for Game items
+    if (item.Type === 'Game' && options.launch !== false) {
+        commands.push({
+            name: globalize.translate('Launch'),
+            id: 'launchgame',
+            icon: 'sports_esports'
+        });
+    }
+
     if (canPlay && item.MediaType !== 'Photo') {
         if (options.play !== false) {
             commands.push({
@@ -655,6 +664,21 @@ function executeCommand(item, id, options) {
                 break;
             case 'cancelseriestimer':
                 deleteSeriesTimer(apiClient, item, resolve, id);
+                break;
+            case 'launchgame':
+                // Launch game via custom API endpoint
+                apiClient.ajax({
+                    url: apiClient.getUrl('Games/' + itemId + '/Launch'),
+                    type: 'POST'
+                }).then(function (launchInfo) {
+                    console.log('Game launch info:', launchInfo);
+                    toast(globalize.translate('LaunchingGame', item.Name));
+                    getResolveFunction(resolve, id)();
+                }).catch(function (error) {
+                    console.error('Failed to launch game:', error);
+                    toast(globalize.translate('ErrorLaunchingGame'));
+                    getResolveFunction(resolve, id)();
+                });
                 break;
             default:
                 reject();
