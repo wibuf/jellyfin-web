@@ -29,6 +29,11 @@ const LibraryIcon: FC<LibraryIconProps> = ({
         return <Favorite />;
     }
 
+    // Handle custom 'games' collection type that's not in the SDK enum
+    if (item.CollectionType === 'games' as unknown as CollectionType) {
+        return <SportsEsports />;
+    }
+
     switch (item.CollectionType) {
         case CollectionType.Movies:
             return <Movie />;
@@ -51,8 +56,6 @@ const LibraryIcon: FC<LibraryIconProps> = ({
             return <VideoLibrary />;
         case CollectionType.Playlists:
             return <Queue />;
-        case 'games':
-            return <SportsEsports />;
         case undefined:
             return <Quiz />;
         default:
